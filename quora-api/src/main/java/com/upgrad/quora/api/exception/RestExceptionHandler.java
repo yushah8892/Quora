@@ -15,4 +15,15 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> userAlreadyPresentException(SignUpRestrictedException sre, WebRequest wr){
         return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.NOT_ACCEPTABLE);
     }
+
+
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<ErrorResponse> authenticationFailedException(AuthenticationFailedException sre, WebRequest wr){
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(SignOutRestrictedException.class)
+    public ResponseEntity<ErrorResponse> authenticationFailedException(SignOutRestrictedException sre, WebRequest wr){
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.NOT_ACCEPTABLE);
+    }
 }
