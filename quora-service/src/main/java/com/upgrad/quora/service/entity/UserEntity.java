@@ -1,9 +1,7 @@
 package com.upgrad.quora.service.entity;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringExclude;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +13,8 @@ import java.io.Serializable;
 @NamedQueries(
         {
                 @NamedQuery(name="userByUserName", query = "select u from UserEntity u where u.userName = :userName"),
-                @NamedQuery(name="userByEmail",query = "select u from UserEntity u where u.email = :email")
+                @NamedQuery(name="userByEmail",query = "select u from UserEntity u where u.email = :email"),
+                @NamedQuery(name = "userByUuid",query = "select u from UserEntity u where u.uuid = :uuid")
         }
 )
 public class UserEntity implements Serializable {
@@ -190,9 +189,9 @@ public class UserEntity implements Serializable {
         return new HashCodeBuilder().append(this).hashCode();
     }
 
-    @Override
+ /*   @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
+    }*/
 
 }
