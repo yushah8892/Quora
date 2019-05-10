@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="users",schema = "public")
@@ -79,6 +80,17 @@ public class UserEntity implements Serializable {
     @Column(name="ROLE")
     @Size(max=30)
     private String role;
+
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "user")
+    private List<QuestionEntity> questionEntity;
+
+    public List<QuestionEntity> getQuestionEntity() {
+        return questionEntity;
+    }
+
+    public void setQuestionEntity(List<QuestionEntity> questionEntity) {
+        this.questionEntity = questionEntity;
+    }
 
     public Integer getId() {
         return id;

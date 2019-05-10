@@ -8,7 +8,8 @@ import java.time.ZonedDateTime;
 @Table(name = "QUESTION",schema = "public")
 @NamedQueries({
         @NamedQuery(name = "getAllQuestion", query = "select u from QuestionEntity u"),
-        @NamedQuery(name = "getQuestionById",query = "select u from QuestionEntity u where u.uuid = :uuid")
+        @NamedQuery(name = "getQuestionById",query = "select u from QuestionEntity u where u.uuid = :uuid"),
+        @NamedQuery(name = "getQuestionByUser",query = "select u from QuestionEntity u where u.user = :userId")
 })
 public class QuestionEntity {
 
@@ -28,7 +29,8 @@ public class QuestionEntity {
     @Column(name = "DATE",nullable = false)
     private ZonedDateTime date;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public Integer getId() {
