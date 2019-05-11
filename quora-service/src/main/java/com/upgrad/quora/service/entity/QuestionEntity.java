@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Entity
+
 @Table(name = "QUESTION",schema = "public")
 @NamedQueries({
         @NamedQuery(name = "getAllQuestion", query = "select u from QuestionEntity u"),
