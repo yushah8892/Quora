@@ -5,7 +5,8 @@ import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "question",schema = "public")
+
+@Table(name = "QUESTION",schema = "public")
 @NamedQueries({
         @NamedQuery(name = "getAllQuestion", query = "select u from QuestionEntity u"),
         @NamedQuery(name = "getQuestionById",query = "select u from QuestionEntity u where u.uuid = :uuid"),
@@ -29,7 +30,8 @@ public class QuestionEntity {
     @Column(name = "DATE",nullable = false)
     private ZonedDateTime date;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public Integer getId() {

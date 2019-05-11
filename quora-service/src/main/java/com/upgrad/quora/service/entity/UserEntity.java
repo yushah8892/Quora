@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+import java.util.List;
+
 @Entity
 @Table(name="users",schema = "public")
 @NamedQueries(
@@ -21,66 +23,80 @@ public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="ID")
     private Integer id;
 
-    @Column(name="uuid")
+    @Column(name="UUID")
     @Size(max=200)
     @NotNull
     private String uuid;
 
-    @Column(name="firstname")
+
+    @Column(name="FIRSTNAME")
     @NotNull
     @Size(max = 30)
     private String firstName;
-
-    @Column(name="lastname")
+  
+    @Column(name="LASTNAME")
     @NotNull
     @Size(max = 30)
     private String lastName;
 
-    @Column(name="username",unique = true)
+    @Column(name="USERNAME",unique = true)
     @NotNull
     @Size(max = 50)
     private String userName;
 
+
+    @Column(name="PASSWORD")
     @ToStringExclude
-    @Column(name="password")
     @NotNull
     @Size(max = 255)
     private String password;
 
-    @Column(name="email",unique = true)
-    @NotNull
-    @Size(max=50)
-    private String email;
 
-    @Column(name="salt")
+    @Column(name="SALT")
     @NotNull
     @Size(max= 200)
     private String salt;
 
-    @Column(name ="country")
-    @Size(max=30)
-    private String country;
+    @Column(name="EMAIL",unique = true)
+    @NotNull
+    @Size(max=50)
+    private String email;
 
-
-    @Column(name="dob")
+    @Column(name="DOB")
     @Size(max=30)
     private String dob;
 
-    @Column(name="aboutme")
+    @Column(name="ABOUTME")
     @Size(max=50)
     private String aboutMe;
 
 
-    @Column(name="contactnumber")
+
+    @Column(name ="COUNTRY")
+    @Size(max=30)
+    private String country;
+
+    @Column(name="CONTACTNUMBER")
     @Size(max=30)
     private String contactNumber;
 
-    @Column(name="role")
+    @Column(name="ROLE")
     @Size(max=30)
     private String role;
+
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "user")
+    private List<QuestionEntity> questionEntity;
+
+    public List<QuestionEntity> getQuestionEntity() {
+        return questionEntity;
+    }
+
+    public void setQuestionEntity(List<QuestionEntity> questionEntity) {
+        this.questionEntity = questionEntity;
+    }
 
     public Integer getId() {
         return id;
