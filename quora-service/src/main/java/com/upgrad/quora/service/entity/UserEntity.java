@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+
 import java.util.List;
 
 @Entity
@@ -30,10 +31,12 @@ public class UserEntity implements Serializable {
     @NotNull
     private String uuid;
 
+
     @Column(name="FIRSTNAME")
     @NotNull
     @Size(max = 30)
     private String firstName;
+  
     @Column(name="LASTNAME")
     @NotNull
     @Size(max = 30)
@@ -44,11 +47,13 @@ public class UserEntity implements Serializable {
     @Size(max = 50)
     private String userName;
 
+
     @Column(name="PASSWORD")
     @ToStringExclude
     @NotNull
     @Size(max = 255)
     private String password;
+
 
     @Column(name="SALT")
     @NotNull
@@ -67,6 +72,7 @@ public class UserEntity implements Serializable {
     @Column(name="ABOUTME")
     @Size(max=50)
     private String aboutMe;
+
 
 
     @Column(name ="COUNTRY")
