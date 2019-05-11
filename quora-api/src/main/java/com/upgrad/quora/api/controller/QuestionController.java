@@ -44,8 +44,6 @@ public class QuestionController {
     @RequestMapping(method = RequestMethod.GET,path = "/question/all",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions(@RequestParam("authorization") String accessToken) throws AuthorizationFailedException {
         List<QuestionEntity> allQuestions = questionService.getAllQuestions(accessToken);
-      //  if(allQuestions != null && allQuestions.size() > 0){
-
             final Iterator<QuestionEntity> iterator = allQuestions.iterator();
             List<QuestionDetailsResponse> questionResponseList = new LinkedList<>();
             while(iterator.hasNext()){
