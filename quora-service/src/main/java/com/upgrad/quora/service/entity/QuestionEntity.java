@@ -3,6 +3,7 @@ package com.upgrad.quora.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 
@@ -30,9 +31,20 @@ public class QuestionEntity {
     @Column(name = "DATE",nullable = false)
     private ZonedDateTime date;
 
+    public List<AnswerEntity> getAnswerEntityList() {
+        return answerEntityList;
+    }
+
+    public void setAnswerEntityList(List<AnswerEntity> answerEntityList) {
+        this.answerEntityList = answerEntityList;
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "questionEntity")
+    private List<AnswerEntity> answerEntityList;
 
     public Integer getId() {
         return id;

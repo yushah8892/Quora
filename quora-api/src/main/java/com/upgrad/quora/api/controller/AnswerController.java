@@ -40,7 +40,7 @@ public class AnswerController {
         answerEntity.setUuid(UUID.randomUUID().toString());
         answerEntity.setAnswer(answerRequest.getAnswer());
         answerEntity.setDate(ZonedDateTime.now());
-        AnswerEntity postedAnswer = answerService.createAnswer(accessToken,answerEntity);
+        AnswerEntity postedAnswer = answerService.createAnswer(accessToken,answerEntity,questionId);
         AnswerResponse answerResponse =new AnswerResponse().id(postedAnswer.getUuid()).status("ANSWER CREATED");
 
         //The method will return the response with the HTTP status as created.

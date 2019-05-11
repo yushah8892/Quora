@@ -83,12 +83,23 @@ public class UserEntity implements Serializable {
     @Size(max=30)
     private String contactNumber;
 
+    public List<AnswerEntity> getAnswerEntities() {
+        return answerEntities;
+    }
+
+    public void setAnswerEntities(List<AnswerEntity> answerEntities) {
+        this.answerEntities = answerEntities;
+    }
+
     @Column(name="ROLE")
     @Size(max=30)
     private String role;
 
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "user")
     private List<QuestionEntity> questionEntity;
+
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "userEntity")
+    private List<AnswerEntity> answerEntities;
 
     public List<QuestionEntity> getQuestionEntity() {
         return questionEntity;

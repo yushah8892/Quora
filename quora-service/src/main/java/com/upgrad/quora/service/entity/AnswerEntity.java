@@ -34,10 +34,12 @@ public class AnswerEntity {
 
     //We are using Many to One relationship since a user can answer many questions.
     @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     //Many to One relationship is used here since a question can have multiple answers.
     @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "question_id")
     private QuestionEntity questionEntity;
 
     public Integer getId() {
