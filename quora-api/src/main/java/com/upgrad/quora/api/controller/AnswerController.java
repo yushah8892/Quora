@@ -42,7 +42,7 @@ public class AnswerController {
 
         final AnswerEntity answerEntity = new AnswerEntity();
         answerEntity.setUuid(UUID.randomUUID().toString());
-        answerEntity.setAnswer(answerRequest.getAnswer());
+        answerEntity.setAns(answerRequest.getAnswer());
         answerEntity.setDate(ZonedDateTime.now());
         AnswerEntity postedAnswer = answerService.createAnswer(accessToken,answerEntity,questionId);
         AnswerResponse answerResponse =new AnswerResponse().id(postedAnswer.getUuid()).status("ANSWER CREATED");
@@ -67,19 +67,27 @@ public class AnswerController {
         return new ResponseEntity<AnswerEditResponse>(editedAnswerResponse, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(method = RequestMethod.GET,path = "answer/all/{questionId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET,path = "/answer/all/{questionId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AnswerDetailsResponse>>  getAllAnswer(@PathVariable("questionId") String questionId,@RequestParam("authorization") String accessToken) throws AuthorizationFailedException, InvalidQuestionException {
 
-       final  List<AnswerEntity> allAnswer = answerService.getAllAnswer(accessToken, questionId);
+        final  List<AnswerEntity> allAnswer = answerService.getAllAnswer(accessToken, questionId);
         Iterator<AnswerEntity> iterator = allAnswer.iterator();
         List<AnswerDetailsResponse> answerDeleteResponsesList = new LinkedList<>();
         while(iterator.hasNext()){
             AnswerEntity answerEntity = iterator.next();
-            AnswerDetailsResponse answerDetailsResponse = new AnswerDetailsResponse().id(answerEntity.getUuid()).questionContent(answerEntity.getQuestionEntity().getContent()).answerContent(answerEntity.getAnswer());
+            AnswerDetailsResponse answerDetailsResponse = new AnswerDetailsResponse().id(answerEntity.getUuid()).questionContent(answerEntity.getQuestionEntity().getContent()).answerContent(answerEntity.getAns());
             answerDeleteResponsesList.add(answerDetailsResponse);
         }
 
         return new ResponseEntity<List<AnswerDetailsResponse>>(answerDeleteResponsesList,HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = "/answer/delete/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AnswerDeleteResponse> deleteAnswer(@RequestParam("authorization") String accessToken, @PathVariable("answerId") String answerId) throws AuthorizationFailedException, AnswerNotFoundException {
+        AnswerEntity answerEntity = answerService.deleteAnswer(accessToken, answerId);
+
+        AnswerDeleteResponse answerDeleteResponse = new AnswerDeleteResponse().id(answerEntity.getUuid()).status("ANSWER DELETED");
+
+        return new ResponseEntity<AnswerDeleteResponse>(answerDeleteResponse, HttpStatus.ACCEPTED);
+    }
 }

@@ -1,47 +1,48 @@
 package com.upgrad.quora.service.entity;
 
+
+import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
-//@Entity annotation is used to create a JPA entity. Entity class is an annotated POJO (Plain Old Java Object.
 @Entity
-//Using @Table annotation we can create a table in our db.Here we are creating a table named answer in the db.
-@Table(name="answer", schema = "public")
+@Table(name = "ANSWER",schema = "public")
 @NamedQueries({
-        @NamedQuery(name = "getAnswerById", query = "select u from AnswerEntity u where u.uuid = :uuid"),
-        @NamedQuery(name = "getAnswerByQuestionId", query = "select u from AnswerEntity u where u.questionEntity = :questionId")
+        @NamedQuery(name = "getAnswerByQuestionId",query = "select u from AnswerEntity u where u.questionEntity =:questionId"),
+        @NamedQuery(name = "getAnswerById", query = "select u from AnswerEntity u where u.uuid = :uuid")
+
 })
+
+@Service
 public class AnswerEntity {
 
-    //@Id annotation is used to create primary key in the table.Here id will be automatically changed since we are using
-    //@GeneratedValue annotation.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "ID")
     private Integer id;
 
-    //The uuid will be exposed since exposing the actual ID may lead to compromising our DB.
-    @Column(name="uuid")
+    @Column(name = "UUID",nullable = false)
     @Size(max = 200)
     private String uuid;
 
-    @Column(name="ans")
-    @Size(max = 255)
-    private String answer;
+    @Column(name = "ANS",nullable = false)
+    @Size(max = 500)
+    private String ans;
 
-    @Column(name="date")
+    @Column(name = "DATE",nullable = false)
     private ZonedDateTime date;
 
-    //We are using Many to One relationship since a user can answer many questions.
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private QuestionEntity questionEntity;
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    //Many to One relationship is used here since a question can have multiple answers.
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "question_id")
-    private QuestionEntity questionEntity;
+
 
     public Integer getId() {
         return id;
@@ -59,12 +60,12 @@ public class AnswerEntity {
         this.uuid = uuid;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getAns() {
+        return ans;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAns(String content) {
+        this.ans = content;
     }
 
     public ZonedDateTime getDate() {

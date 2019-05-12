@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 
-import javax.ws.rs.PathParam;
 import java.time.ZonedDateTime;
 import java.util.Iterator;
 import java.util.LinkedList;
