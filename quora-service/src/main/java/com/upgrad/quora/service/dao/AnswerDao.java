@@ -40,6 +40,10 @@ public class AnswerDao {
     public  List<AnswerEntity> getAllAnswer(QuestionEntity questionId){
         return entityManager.createNamedQuery("getAnswerByQuestionId",AnswerEntity.class).setParameter("questionId",questionId).getResultList();
     }
+    public AnswerEntity deleteAnswer(AnswerEntity answerEntity) {
 
+        entityManager.remove(answerEntity);
+        return answerEntity;
+    }
 
 }

@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "ANSWER",schema = "public")
 @NamedQueries({
-        @NamedQuery(name = "getAnswerByQuestionId",query = "select u from AnswerEntity u where u.questionEntity =:questionId"),
+        @NamedQuery(name = "getAnswerByQuestion",query = "select u from AnswerEntity u where u.questionEntity =:question"),
         @NamedQuery(name = "getAnswerById", query = "select u from AnswerEntity u where u.uuid = :uuid")
 
 })
@@ -34,13 +34,13 @@ public class AnswerEntity {
     @Column(name = "DATE",nullable = false)
     private ZonedDateTime date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "question_id")
     private QuestionEntity questionEntity;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    private UserEntity user;
 
 
 
@@ -65,7 +65,7 @@ public class AnswerEntity {
     }
 
     public void setAns(String content) {
-        this.ans = content;
+        this.ans = ans;
     }
 
     public ZonedDateTime getDate() {
@@ -76,12 +76,12 @@ public class AnswerEntity {
         this.date = date;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public QuestionEntity getQuestionEntity() {

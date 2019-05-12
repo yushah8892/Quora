@@ -43,7 +43,7 @@ public class QuestionEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "questionEntity")
+    @OneToMany(mappedBy = "questionEntity",cascade = CascadeType.REMOVE)
     private List<AnswerEntity> answerEntityList;
 
     public Integer getId() {
