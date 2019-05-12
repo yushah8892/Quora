@@ -9,7 +9,8 @@ import java.time.ZonedDateTime;
 //Using @Table annotation we can create a table in our db.Here we are creating a table named answer in the db.
 @Table(name="answer", schema = "public")
 @NamedQueries({
-        @NamedQuery(name = "getAnswerById", query = "select u from AnswerEntity u where u.uuid = :uuid")
+        @NamedQuery(name = "getAnswerById", query = "select u from AnswerEntity u where u.uuid = :uuid"),
+        @NamedQuery(name = "getAnswerByQuestionId", query = "select u from AnswerEntity u where u.questionEntity = :questionId")
 })
 public class AnswerEntity {
 

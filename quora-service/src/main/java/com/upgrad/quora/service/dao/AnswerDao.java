@@ -1,10 +1,12 @@
 package com.upgrad.quora.service.dao;
 
 import com.upgrad.quora.service.entity.AnswerEntity;
+import com.upgrad.quora.service.entity.QuestionEntity;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 //@Repository annotation marks the class as a Data Access Object
 @Repository
@@ -32,6 +34,11 @@ public class AnswerDao {
         } catch (NoResultException nre) {
             return null;
         }
+    }
+
+
+    public  List<AnswerEntity> getAllAnswer(QuestionEntity questionId){
+        return entityManager.createNamedQuery("getAnswerByQuestionId",AnswerEntity.class).setParameter("questionId",questionId).getResultList();
     }
 
 

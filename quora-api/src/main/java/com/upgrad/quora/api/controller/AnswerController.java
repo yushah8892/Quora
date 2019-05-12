@@ -1,10 +1,8 @@
 package com.upgrad.quora.api.controller;
 
-import com.upgrad.quora.api.model.AnswerEditRequest;
-import com.upgrad.quora.api.model.AnswerEditResponse;
-import com.upgrad.quora.api.model.AnswerRequest;
-import com.upgrad.quora.api.model.AnswerResponse;
+import com.upgrad.quora.api.model.*;
 import com.upgrad.quora.service.business.AnswerService;
+import com.upgrad.quora.service.business.QuestionService;
 import com.upgrad.quora.service.entity.AnswerEntity;
 import com.upgrad.quora.service.exception.AnswerNotFoundException;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
@@ -15,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.ZonedDateTime;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 //@RestController annotation combines @Controller and @ResponseBody annotations. This will help in labeling the class
@@ -27,6 +28,9 @@ public class AnswerController {
     //Injecting the dependency using @Autowired annotation
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private QuestionService questionService;
 
     //@RequestMapping is used to map the web requests to the specific classes/methods.
     //The HTTP method used here is POST since we are creating an answer.
@@ -62,4 +66,20 @@ public class AnswerController {
         //The method will return the response with the HTTP status as accepted.
         return new ResponseEntity<AnswerEditResponse>(editedAnswerResponse, HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(method = RequestMethod.GET,path = "answer/all/{questionId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<AnswerDetailsResponse>>  getAllAnswer(@PathVariable("questionId") String questionId,@RequestParam("authorization") String accessToken) throws AuthorizationFailedException, InvalidQuestionException {
+
+       final  List<AnswerEntity> allAnswer = answerService.getAllAnswer(accessToken, questionId);
+        Iterator<AnswerEntity> iterator = allAnswer.iterator();
+        List<AnswerDetailsResponse> answerDeleteResponsesList = new LinkedList<>();
+        while(iterator.hasNext()){
+            AnswerEntity answerEntity = iterator.next();
+            AnswerDetailsResponse answerDetailsResponse = new AnswerDetailsResponse().id(answerEntity.getUuid()).questionContent(answerEntity.getQuestionEntity().getContent()).answerContent(answerEntity.getAnswer());
+            answerDeleteResponsesList.add(answerDetailsResponse);
+        }
+
+        return new ResponseEntity<List<AnswerDetailsResponse>>(answerDeleteResponsesList,HttpStatus.ACCEPTED);
+    }
+
 }
