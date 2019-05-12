@@ -50,7 +50,7 @@ public class QuestionController {
                 QuestionDetailsResponse questionDetailsResponse = new QuestionDetailsResponse().id(questionEntity.getUuid()).content(questionEntity.getContent());
                 questionResponseList.add(questionDetailsResponse);
             }
-           return new ResponseEntity<List<QuestionDetailsResponse>>(questionResponseList,HttpStatus.ACCEPTED);
+           return new ResponseEntity<List<QuestionDetailsResponse>>(questionResponseList,HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT,path = "question/edit/{questionId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
