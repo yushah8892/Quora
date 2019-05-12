@@ -53,7 +53,7 @@ public class QuestionController {
            return new ResponseEntity<List<QuestionDetailsResponse>>(questionResponseList,HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(method = RequestMethod.POST,path = "question/edit/{questionId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.PUT,path = "question/edit/{questionId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionEditResponse> editQuestion(QuestionEditRequest questionEditRequest, @RequestParam("authorization")String accessToken, @PathVariable("questionId")String questionId) throws AuthorizationFailedException, InvalidQuestionException {
         QuestionEntity questionEntity = questionService.editQuestion(accessToken, questionId, questionEditRequest.getContent());
 
@@ -83,6 +83,6 @@ public class QuestionController {
             QuestionDetailsResponse questionDetailsResponse = new QuestionDetailsResponse().id(questionEntity.getUuid()).content(questionEntity.getContent());
             questionResponseList.add(questionDetailsResponse);
         }
-        return new ResponseEntity<List<QuestionDetailsResponse>>(questionResponseList,HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<QuestionDetailsResponse>>(questionResponseList,HttpStatus.OK);
     }
 }

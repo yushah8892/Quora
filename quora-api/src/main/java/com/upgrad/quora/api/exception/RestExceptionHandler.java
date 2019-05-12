@@ -13,7 +13,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(SignUpRestrictedException.class)
     public ResponseEntity<ErrorResponse> userAlreadyPresentException(SignUpRestrictedException sre, WebRequest wr){
-        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.CONFLICT);
     }
 
 
@@ -24,7 +24,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(SignOutRestrictedException.class)
     public ResponseEntity<ErrorResponse> signOutRestrictedException(SignOutRestrictedException sre, WebRequest wr){
-        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -33,12 +33,17 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)
-    public ResponseEntity<ErrorResponse> userNotFoundException(AuthorizationFailedException sre, WebRequest wr){
-        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<ErrorResponse> authorizationFailedException(AuthorizationFailedException sre, WebRequest wr){
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(InvalidQuestionException.class)
     public ResponseEntity<ErrorResponse> invalidQuestionException(InvalidQuestionException sre, WebRequest wr){
-        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AnswerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> answerNotFoundException(AnswerNotFoundException sre, WebRequest wr){
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(sre.getCode()).message(sre.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 }

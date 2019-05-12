@@ -12,14 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
-public class UserProfileController {
-
+public class CommonController {
     @Autowired
     private UserProfileService userProfileService;
 
     @RequestMapping(method = RequestMethod.GET,path = "/userprofile/{userId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UserDetailsResponse> getUserDetails(@PathVariable("userId") String userId, @RequestParam("authentication") String authentication) throws AuthorizationFailedException, UserNotFoundException {
+    public ResponseEntity<UserDetailsResponse> getUserDetails(@PathVariable("userId") String userId, @RequestParam("authorization") String authentication) throws AuthorizationFailedException, UserNotFoundException {
 
         UserEntity userDetails = userProfileService.getUserDetails(userId, authentication);
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse().userName(userDetails.getUserName())
